@@ -1,12 +1,12 @@
-package models;
+package models.enums;
 
-public enum ElectronicType {
-    TELEVISION(0, "Television"),
-    RADIO(1, "Radio");
+public enum BuyStatus {
+    WAITING(0, "waiting"),
+    END(1, "end");
     private final int index;
     private final String title;
 
-    ElectronicType(int index, String title) {
+    BuyStatus(int index, String title) {
         this.index = index;
         this.title = title;
     }

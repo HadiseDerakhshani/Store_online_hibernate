@@ -1,6 +1,6 @@
 package database;
 
-import models.BuyStatus;
+import models.enums.BuyStatus;
 import models.Orders;
 import org.hibernate.Session;
 import org.hibernate.Transaction;

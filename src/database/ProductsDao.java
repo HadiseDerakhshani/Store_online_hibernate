@@ -1,7 +1,7 @@
 package database;
 
-import models.Grouping;
-import models.Products;
+import models.*;
+import models.enums.Grouping;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -94,40 +94,53 @@ public class ProductsDao extends DataBaseAccess {
     }
 
     public String getDetailProduct(String type, int id) throws SQLException {
-        if (connection != null) {
-            String sql = "";
+        session = getSessionFactory().openSession();
+        session.beginTransaction();
+
+            Query hql = null;
             boolean electronic = false, reading = false, shoes = false;
             if (type.equals(Grouping.ELECTRONIC.getTitle())) {
                 electronic = true;
-                sql = String.format("SELECT * FROM online_shop.product INNER JOIN online_shop.electronic WHERE product.id=electronic.idProduct AND electronic.idProduct=%d;", id);
+              //  hql = String.format("SELECT * FROM online_shop.product INNER JOIN online_shop.electronic WHERE product.id=electronic.idProduct AND electronic.idProduct=%d;", id);
+                hql =session.createQuery("from  Electronics  where  idProduct=:id");
+                hql.setParameter("id",id);
             } else if (type.equals(Grouping.READING.getTitle())) {
                 reading = true;
-                sql = String.format("SELECT * FROM online_shop.product INNER JOIN online_shop.reading WHERE product.id=reading.id_products AND reading.id_products=%d;", id);
+             //   hql = String.format("SELECT * FROM online_shop.product INNER JOIN online_shop.reading WHERE product.id=reading.id_products AND reading.id_products=%d;", id);
+                hql =session.createQuery("from  Reading  where  Product=:id");
             } else if (type.equals(Grouping.SHOES.getTitle())) {
                 shoes = true;
-                sql = String.format("SELECT * FROM online_shop.product INNER JOIN online_shop.shoes WHERE product.id=shoes.id_Product AND shoes.id_Product=%d;", id);
+              //  hql = String.format("SELECT * FROM online_shop.product INNER JOIN online_shop.shoes WHERE product.id=shoes.id_Product AND shoes.id_Product=%d;", id);
+                hql =session.createQuery("from Shoes  where  Product=:id");
+
             }
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
-            if (resultSet.next()) {
+        Object o = hql.uniqueResult();
+        session.getTransaction().commit();
+            session.close();
+            if (o != null){
                 if (electronic) {
-                    return "Id : " + resultSet.getInt(1) + ", Name : " + resultSet.getString(2)
-                            + ", Price : " + resultSet.getInt(3) + ", Stock : " + resultSet.getInt(4)
-                            + ", Size : " + resultSet.getString(7) + ", Pow : " + resultSet.getString(8) + ", Possibilities : " + resultSet.getString(9);
+                    Electronics electronics=(Electronics) o;
+                    return "Id : " + electronics.getIdProduct()+ ", Name : " +electronics.getName()
+                            + ", Price : " + electronics.getPrice() + ", Stock : " + electronics.getStock()
+                            + ", Size : " + electronics.getSize() + ", Pow : " + electronics.getPow()
+                            + ", Possibilities : " + electronics.getPossibilities();
                 } else if (reading) {
-                    return "Id : " + resultSet.getInt(1) + ", Name : " + resultSet.getString(2)
-                            + ", Price : " + resultSet.getInt(3) + ", Stock : " + resultSet.getInt(4)
-                            + ", Pages : " + resultSet.getInt(7) + ", Size : " + resultSet.getString(8) + ", Material : " + resultSet.getString(9);
+                    Reading reading1=(Reading) o;
+                    return "Id : " + reading1.getIdProduct() + ", Name : " + reading1.getName()
+                            + ", Price : " + reading1.getPrice() + ", Stock : " + reading1.getStock()
+                            + ", Pages : " + reading1.getPages() + ", Size : " + reading1.getSize()
+                            + ", Material : " + reading1.getMaterial();
 
 
                 } else if (shoes) {
-                    return "Id : " + resultSet.getInt(1) + ", Name : " + resultSet.getString(2)
-                            + ", Price : " + resultSet.getInt(3) + ", Stock : " + resultSet.getInt(4)
-                            + ", Size : " + resultSet.getString(7) + ", Color : " + resultSet.getString(8);
+                    Shoes shoes1 = (Shoes) o;
+                    return "Id : " + shoes1.getIdProduct() + ", Name : " +shoes1.getName()
+                            + ", Price : " + shoes1.getPrice()+ ", Stock : " + shoes1.getStock()
+                            + ", Size : " + shoes1.getSize()+ ", Color : " + shoes1.getColor();
                 }
 
             }
-        }
+
         return null;
 
     }

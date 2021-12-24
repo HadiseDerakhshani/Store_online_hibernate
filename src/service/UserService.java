@@ -1,8 +1,8 @@
 package service;
 
 import exceptions.InvalidInputExp;
-import models.BuyStatus;
-import models.Grouping;
+import models.enums.BuyStatus;
+import models.enums.Grouping;
 import models.Orders;
 import models.Products;
 

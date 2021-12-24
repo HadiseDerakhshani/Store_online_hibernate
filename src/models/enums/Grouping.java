@@ -1,12 +1,13 @@
-package models;
+package models.enums;
 
-public enum ReadingType {
-    BOOK(0, "Book"),
-    JOURNAL(1, "Journal");
+public enum Grouping {
+    ELECTRONIC(0, "Electronic"),
+    SHOES(1, "Shoes"),
+    READING(2, "Reading");
     private int index;
     private String title;
 
-    ReadingType(int index, String title) {
+    Grouping(int index, String title) {
         this.index = index;
         this.title = title;
     }

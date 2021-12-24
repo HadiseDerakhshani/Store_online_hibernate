@@ -3,6 +3,10 @@ package service;
 import exceptions.InvalidInputExp;
 import exceptions.InvalidNameExp;
 import models.*;
+import models.enums.ElectronicType;
+import models.enums.Grouping;
+import models.enums.ReadingType;
+import models.enums.ShoesType;
 
 import java.sql.SQLException;
 import java.util.InputMismatchException;
@@ -143,7 +147,7 @@ public class AdminService {
 
         }
 
-        return new Electronics(products.getName(), products.getPrice(), products.getStock(), products.getGrouping(), size, pow, possibilities, type, products.getIdProduct());
+        return new Electronics(products.getName(), products.getPrice(), products.getStock(), products.getGrouping(), size, pow, possibilities, type);
 
 
     }
@@ -168,7 +172,7 @@ public class AdminService {
 
         }
 
-        return new Shoes(products.getName(), products.getPrice(), products.getStock(), products.getGrouping(), size, color, type, products.getIdProduct());
+        return new Shoes(products.getName(), products.getPrice(), products.getStock(), products.getGrouping(), size, color, type);
 
 
     }
@@ -195,7 +199,7 @@ public class AdminService {
 
         }
 
-        return new Reading(products.getName(), products.getPrice(), products.getStock(), products.getGrouping(), pages, size, material, type, products.getIdProduct());
+        return new Reading(products.getName(), products.getPrice(), products.getStock(), products.getGrouping(), pages, size, material, type);
 
 
     }
