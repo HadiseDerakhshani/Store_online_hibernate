@@ -1,9 +1,8 @@
 package database;
 
-import models.enums.BuyStatus;
 import models.Orders;
+import models.enums.BuyStatus;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.io.Serializable;
@@ -13,33 +12,28 @@ import java.util.List;
 
 public class OrderDao extends DataBaseAccess {
     private Session session;
-    private Transaction transaction;
-
-    public OrderDao() {
-        super();
-    }
 
     public List<Orders> getListOrders(int id) {
         List<Orders> ordersList = new ArrayList<>();
-        session = getSessionFactory().openSession();
-        transaction = session.beginTransaction();
+        session = builderSession().openSession();
+        session.beginTransaction();
         Query query = session.createQuery(" from Orders where userId=:id and status=:s");
         query.setParameter("id", id);
         query.setParameter("s", "waiting");
         List<Orders> list = query.list();
         for (Orders item : list)
             ordersList.add(item);
-        transaction.commit();
+        session.getTransaction().commit();
         session.close();
         return ordersList;
     }
 
     public int setOrder(Orders orders) {
-        session = getSessionFactory().openSession();
-        transaction = session.beginTransaction();
+        session = builderSession().openSession();
+        session.beginTransaction();
         Serializable save = session.save(orders);
         int i = (int) save;
-        transaction.commit();
+        session.getTransaction().commit();
         session.close();
         if (i != 0)
             return i;
@@ -49,13 +43,13 @@ public class OrderDao extends DataBaseAccess {
 
     public int getOrderById(int id) {
 
-        session = getSessionFactory().openSession();
-        transaction = session.beginTransaction();
+        session = builderSession().openSession();
+        session.beginTransaction();
         Query query = session.createQuery(" from Orders where id=:id ");
         query.setParameter("id", id);
         List list = query.list();
         int i = (int) list.get(0);
-        transaction.commit();
+        session.getTransaction().commit();
         session.close();
         return i;
 
@@ -63,12 +57,12 @@ public class OrderDao extends DataBaseAccess {
     }
 
     public int deleteOrder(int id) {
-        session = getSessionFactory().openSession();
-        transaction = session.beginTransaction();
+        session = builderSession().openSession();
+        session.beginTransaction();
         Query query = session.createQuery("delete from Orders  where id=:id");
         query.setParameter("id", id);
         int i = query.executeUpdate();
-        transaction.commit();
+        session.getTransaction().commit();
         session.close();
         if (i != 0)
             return i;
@@ -78,13 +72,13 @@ public class OrderDao extends DataBaseAccess {
     }
 
     public int UpdateOrders(int id) throws SQLException {
-        session = getSessionFactory().openSession();
-        transaction = session.beginTransaction();
+        session = builderSession().openSession();
+        session.beginTransaction();
         Query query = session.createQuery("update Orders set status=:s where userId=:id");
         query.setParameter("s", BuyStatus.END.getTitle());
         query.setParameter("id", id);
         int i = query.executeUpdate();
-        transaction.commit();
+        session.getTransaction().commit();
         session.close();
         if (i != 0)
             return i;

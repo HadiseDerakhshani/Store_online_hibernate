@@ -3,14 +3,12 @@ package models;
 import lombok.Data;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
 @Data
 @Entity
 public class Shoes extends Products {
 
-   // private int idProduct;
+    // private int idProduct;
     private String size;
     private String color;
     private String type;
@@ -20,7 +18,7 @@ public class Shoes extends Products {
         this.size = size;
         this.color = color;
         this.type = type;
-       // this.idProduct = idProduct;
+        // this.idProduct = idProduct;
     }
 
 

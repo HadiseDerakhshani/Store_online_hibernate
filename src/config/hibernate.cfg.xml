@@ -12,14 +12,13 @@
         <property name="dialect">org.hibernate.dialect.MySQL8Dialect</property>
 
         <property name="hbm2ddl.auto">update</property><!--CRUD-->
-        <property name="connection.pool_size">1</property>
+        <property name="connection.pool_size">10</property>
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
 
 
         <mapping class="models.Electronics"/>
         <mapping class="models.Orders"/>
-        <mapping class="models.Products"/>
         <mapping class="models.Reading"/>
         <mapping class="models.Shoes"/>
         <mapping class="models.User"/>

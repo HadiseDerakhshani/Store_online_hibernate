@@ -6,16 +6,12 @@ import org.hibernate.cfg.Configuration;
 
 
 public class DataBaseAccess {
-    SessionFactory sessionFactory;
+    public static SessionFactory sessionFactory;
 
-
-    public DataBaseAccess() {
-        sessionFactory = new Configuration().configure("hibernate/hibernate.cfg.xml").buildSessionFactory();
-    }
-
-    public SessionFactory getSessionFactory() {
+    public static SessionFactory builderSession() {
+        if (sessionFactory == null) {
+            sessionFactory = new Configuration().configure("config/hibernate.cfg.xml").buildSessionFactory();
+        }
         return sessionFactory;
     }
-
-
 }

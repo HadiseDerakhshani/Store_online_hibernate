@@ -3,14 +3,12 @@ package models;
 import lombok.Data;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
 @Data
 @Entity
 public class Electronics extends Products {
 
-  //  private int idProduct;
+    //  private int idProduct;
     private String size;
     private String pow;
     private String possibilities;
@@ -22,7 +20,7 @@ public class Electronics extends Products {
         this.pow = pow;
         this.possibilities = possibilities;
         this.type = type;
-      //  this.idProduct = idProduct;
+        //  this.idProduct = idProduct;
     }
 
 

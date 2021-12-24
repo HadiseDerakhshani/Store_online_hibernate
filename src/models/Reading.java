@@ -3,13 +3,11 @@ package models;
 import lombok.Data;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
 @Data
 @Entity
 public class Reading extends Products {
-   // private int idProduct;
+    // private int idProduct;
     private int pages;
     private String size;
     private String material;
@@ -22,7 +20,7 @@ public class Reading extends Products {
         this.size = size;
         this.material = material;
         this.type = type1;
-       // this.idProduct = idProduct;
+        // this.idProduct = idProduct;
     }
 
 
